@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.spring.rest.model.PersonDto;
+import com.spring.rest.dtomodel.PersonDto;
 import com.spring.rest.service.PersonService;
 
 import lombok.extern.slf4j.Slf4j;

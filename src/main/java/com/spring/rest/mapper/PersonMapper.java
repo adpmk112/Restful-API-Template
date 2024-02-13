@@ -2,8 +2,8 @@ package com.spring.rest.mapper;
 
 import org.mapstruct.Mapper;
 
-import com.spring.rest.data.Person;
-import com.spring.rest.model.PersonDto;
+import com.spring.rest.datamodel.Person;
+import com.spring.rest.dtomodel.PersonDto;
 
 @Mapper(componentModel = "spring")
 public interface PersonMapper {

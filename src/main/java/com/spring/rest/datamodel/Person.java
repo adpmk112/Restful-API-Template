@@ -1,4 +1,4 @@
-package com.spring.rest.data;
+package com.spring.rest.datamodel;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;

@@ -4,10 +4,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import com.spring.rest.data.Person;
+import com.spring.rest.datamodel.Person;
+import com.spring.rest.dtomodel.ApiResponse;
+import com.spring.rest.dtomodel.PersonDto;
 import com.spring.rest.mapper.PersonMapper;
-import com.spring.rest.model.ApiResponse;
-import com.spring.rest.model.PersonDto;
 import com.spring.rest.repo.PersonRepository;
 
 import lombok.AllArgsConstructor;
