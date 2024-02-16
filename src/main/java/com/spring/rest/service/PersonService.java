@@ -1,5 +1,7 @@
 package com.spring.rest.service;
 
+import java.util.List;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -32,27 +34,33 @@ public class PersonService {
 
 	}
 
-	public ResponseEntity<Object> findPersonById(PersonDto dto) {
+	public ResponseEntity<Object> findPersonById(long id) {
 
-		Person person = personMapper.toPerson(dto);
-
-		Person searchedPerson = findPersonById(person);
+		Person searchedPerson = getPersonById(id);
 
 		return ResponseEntity.status(HttpStatus.OK).body(new ApiResponse("Data found", searchedPerson));
 
 	}
 
-	public Person findPersonById(Person person) {
+	private Person getPersonById(long id) {
 
-		return personRepo.findById(person.getId())
+		return personRepo.findById(id)
 				.orElseThrow(() -> new DataNotFoundException());
+	}
+	
+	public ResponseEntity<Object> findAllPeople(){
+		
+		List<Person> personList = personRepo.findAll();
+		
+		return ResponseEntity.status(HttpStatus.OK).
+				body(new ApiResponse("Data List retrieved successfully", personList));
 	}
 
 	public ResponseEntity<Object> updatePerson(PersonDto dto) {
 
 		Person person = personMapper.toPerson(dto);
 
-		findPersonById(person);
+		getPersonById(person.getId());
 
 		Person updatedPerson = personRepo.save(person);
 
