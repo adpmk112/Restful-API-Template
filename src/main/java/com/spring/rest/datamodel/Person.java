@@ -1,5 +1,6 @@
 package com.spring.rest.datamodel;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -17,5 +18,6 @@ public class Person {
 	
 	private int age;
 	
+	@Column(columnDefinition = "tinyint(1) default 0")
 	private boolean isDelete;
 }
