@@ -11,6 +11,11 @@ import lombok.Data;
 public class Person {
 	
 	@Id @GeneratedValue(strategy = GenerationType.AUTO)
-	private Long id;
+	private long id;
+	
 	private String name;
+	
+	private int age;
+	
+	private boolean isDelete;
 }

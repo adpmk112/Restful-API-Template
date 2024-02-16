@@ -9,4 +9,8 @@ public class PersonDto {
 	
 	@NotBlank(message = "Name must not be blank")
 	private String name;
+	
+	private int age;
+	
+	private boolean isDelete;
 }
