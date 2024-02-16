@@ -10,7 +10,7 @@ import com.spring.rest.datamodel.Person;
 @Repository
 public interface PersonRepository extends JpaRepository<Person, Long>{
 	
-	Optional<Person> findById(long id);
+	Optional<Person> findByIdAndIsDeleteFalse(Long id);
 	
-	List<Person> findAll();
+	List<Person> findAllByIsDeleteFalse();
 }
