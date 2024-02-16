@@ -24,36 +24,41 @@ public class PersonService {
 	private PersonMapper personMapper;
 
 	public ResponseEntity<Object> savePerson(PersonDto dto) {
-
+		
 		Person person = personMapper.toPerson(dto);
-
+		
 		Person savedPerson = personRepo.save(person);
+		
+		PersonDto responseData = personMapper.toPersonDto(savedPerson);
 
 		return ResponseEntity.status(HttpStatus.CREATED)
-				.body(new ApiResponse("Person saved successfully", savedPerson));
+				.body(new ApiResponse("Person saved successfully", responseData));
 
 	}
 
 	public ResponseEntity<Object> findPersonById(long id) {
 
 		Person searchedPerson = getPersonById(id);
+		
+		PersonDto responseData = personMapper.toPersonDto(searchedPerson);
 
-		return ResponseEntity.status(HttpStatus.OK).body(new ApiResponse("Data found", searchedPerson));
+		return ResponseEntity.status(HttpStatus.OK).body(new ApiResponse("Data found", responseData));
 
 	}
 
 	private Person getPersonById(long id) {
 
-		return personRepo.findById(id)
-				.orElseThrow(() -> new DataNotFoundException());
+		return personRepo.findByIdAndIsDeleteFalse(id).orElseThrow(() -> new DataNotFoundException());
 	}
-	
-	public ResponseEntity<Object> findAllPeople(){
+
+	public ResponseEntity<Object> findAllPeople() {
+
+		List<Person> personList = personRepo.findAllByIsDeleteFalse();
 		
-		List<Person> personList = personRepo.findAll();
-		
-		return ResponseEntity.status(HttpStatus.OK).
-				body(new ApiResponse("Data List retrieved successfully", personList));
+		List<PersonDto> responseData = personMapper.toPersonDtoList(personList);
+
+		return ResponseEntity.status(HttpStatus.OK)
+				.body(new ApiResponse("Data List retrieved successfully", responseData));
 	}
 
 	public ResponseEntity<Object> updatePerson(PersonDto dto) {
@@ -63,9 +68,24 @@ public class PersonService {
 		getPersonById(person.getId());
 
 		Person updatedPerson = personRepo.save(person);
+		
+		PersonDto responseData = personMapper.toPersonDto(updatedPerson);
 
+		return ResponseEntity.status(HttpStatus.OK)
+				.body(new ApiResponse("Person updated successfully", responseData));
+
+	}
+
+	public ResponseEntity<Object> deletePerson(long id) {
+		
+		Person searchedPerson = getPersonById(id);
+		
+		searchedPerson.setDelete(true);
+		
+		personRepo.save(searchedPerson);
+		
 		return ResponseEntity.status(HttpStatus.NO_CONTENT)
-				.body(new ApiResponse("Person updated successfully", updatedPerson));
-
+				.body(new ApiResponse("Person deleted successfully", null));
+		
 	}
 }
