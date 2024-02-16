@@ -11,6 +11,4 @@ public class PersonDto {
 	private String name;
 	
 	private int age;
-	
-	private boolean isDelete;
 }
