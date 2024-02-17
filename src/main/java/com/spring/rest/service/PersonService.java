@@ -41,7 +41,7 @@ public class PersonService {
 
 		Person searchedPerson = getPersonById(id);
 		
-		PersonResponseDto responseData = personMapper.toPersonResponse(searchedPerson);
+		PersonDto responseData = personMapper.toPersonDto(searchedPerson);
 
 		return ResponseEntity.status(HttpStatus.OK).body(new ApiResponse("Data found", responseData));
 
@@ -56,7 +56,7 @@ public class PersonService {
 
 		List<Person> personList = personRepo.findAllByIsDeleteFalse();
 		
-		List<PersonResponseDto> responseData = personMapper.toPersonResponseList(personList);
+		List<PersonDto> responseData = personMapper.toPersonDtoList(personList);
 
 		return ResponseEntity.status(HttpStatus.OK)
 				.body(new ApiResponse("Data List retrieved successfully", responseData));
@@ -70,7 +70,7 @@ public class PersonService {
 
 		Person updatedPerson = personRepo.save(person);
 		
-		PersonResponseDto responseData = personMapper.toPersonResponse(updatedPerson);
+		PersonDto responseData = personMapper.toPersonDto(updatedPerson);
 
 		return ResponseEntity.status(HttpStatus.OK)
 				.body(new ApiResponse("Person updated successfully", responseData));
