@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.spring.rest.datamodel.Person;
 import com.spring.rest.dtomodel.ApiResponse;
 import com.spring.rest.dtomodel.PersonDto;
+import com.spring.rest.dtomodel.PersonResponseDto;
 import com.spring.rest.exception.DataNotFoundException;
 import com.spring.rest.mapper.PersonMapper;
 import com.spring.rest.repo.PersonRepository;
@@ -29,7 +30,7 @@ public class PersonService {
 		
 		Person savedPerson = personRepo.save(person);
 		
-		PersonDto responseData = personMapper.toPersonDto(savedPerson);
+		PersonResponseDto responseData = personMapper.toPersonResponse(savedPerson);
 
 		return ResponseEntity.status(HttpStatus.CREATED)
 				.body(new ApiResponse("Person saved successfully", responseData));
@@ -40,7 +41,7 @@ public class PersonService {
 
 		Person searchedPerson = getPersonById(id);
 		
-		PersonDto responseData = personMapper.toPersonDto(searchedPerson);
+		PersonResponseDto responseData = personMapper.toPersonResponse(searchedPerson);
 
 		return ResponseEntity.status(HttpStatus.OK).body(new ApiResponse("Data found", responseData));
 
@@ -55,7 +56,7 @@ public class PersonService {
 
 		List<Person> personList = personRepo.findAllByIsDeleteFalse();
 		
-		List<PersonDto> responseData = personMapper.toPersonDtoList(personList);
+		List<PersonResponseDto> responseData = personMapper.toPersonResponseList(personList);
 
 		return ResponseEntity.status(HttpStatus.OK)
 				.body(new ApiResponse("Data List retrieved successfully", responseData));
@@ -69,7 +70,7 @@ public class PersonService {
 
 		Person updatedPerson = personRepo.save(person);
 		
-		PersonDto responseData = personMapper.toPersonDto(updatedPerson);
+		PersonResponseDto responseData = personMapper.toPersonResponse(updatedPerson);
 
 		return ResponseEntity.status(HttpStatus.OK)
 				.body(new ApiResponse("Person updated successfully", responseData));
