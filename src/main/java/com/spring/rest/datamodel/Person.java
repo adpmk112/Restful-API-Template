@@ -11,7 +11,7 @@ import lombok.Data;
 @Data
 public class Person {
 	
-	@Id @GeneratedValue(strategy = GenerationType.AUTO)
+	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
 	
 	private String name;
