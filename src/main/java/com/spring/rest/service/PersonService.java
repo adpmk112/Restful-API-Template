@@ -18,13 +18,14 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 @Service
 
-public class PersonService {
+public class PersonService implements CommonCRUDConfigurable<Person,PersonDto> {
 
 	private PersonRepository personRepo;
 
 	private PersonMapper personMapper;
 
-	public ResponseEntity<Object> savePerson(PersonDto dto) {
+	@Override
+	public ResponseEntity<Object> save(PersonDto dto) {
 		
 		Person person = personMapper.toPerson(dto);
 		
@@ -37,22 +38,25 @@ public class PersonService {
 
 	}
 
-	public ResponseEntity<Object> findPersonById(long id) {
+	@Override
+	public ResponseEntity<Object> findById(long id) {
 
-		Person searchedPerson = getPersonById(id);
+		Person searchedPerson = getById(id);
 		
 		PersonDto responseData = personMapper.toPersonDto(searchedPerson);
 
 		return ResponseEntity.status(HttpStatus.OK).body(new ApiResponse("Data found", responseData));
 
 	}
-
-	private Person getPersonById(long id) {
+	
+	@Override
+	public Person getById(long id) {
 
 		return personRepo.findByIdAndIsDeleteFalse(id).orElseThrow(() -> new DataNotFoundException());
 	}
 
-	public ResponseEntity<Object> findAllPeople() {
+	@Override
+	public ResponseEntity<Object> findAll() {
 
 		List<Person> personList = personRepo.findAllByIsDeleteFalse();
 		
@@ -62,11 +66,12 @@ public class PersonService {
 				.body(new ApiResponse("Data List retrieved successfully", responseData));
 	}
 
-	public ResponseEntity<Object> updatePerson(PersonDto dto) {
+	@Override
+	public ResponseEntity<Object> update(PersonDto dto) {
 
 		Person person = personMapper.toPerson(dto);
 
-		getPersonById(person.getId());
+		getById(person.getId());
 
 		Person updatedPerson = personRepo.save(person);
 		
@@ -77,16 +82,16 @@ public class PersonService {
 
 	}
 
-	public ResponseEntity<Object> deletePerson(long id) {
+	@Override
+	public ResponseEntity<Object> delete(long id) {
 		
-		Person searchedPerson = getPersonById(id);
+		Person searchedPerson = getById(id);
 		
 		searchedPerson.setDelete(true);
 		
 		personRepo.save(searchedPerson);
 		
-		return ResponseEntity.status(HttpStatus.NO_CONTENT)
-				.body(new ApiResponse("Person deleted successfully", null));
+		return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
 		
 	}
 }
