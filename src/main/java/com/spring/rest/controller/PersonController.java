@@ -26,7 +26,7 @@ public class PersonController {
 	@PostMapping
 	public ResponseEntity<Object> createPerson(@Valid @RequestBody PersonDto person) {
 
-		ResponseEntity<Object> response = personService.savePerson(person);
+		ResponseEntity<Object> response = personService.save(person);
 
 		return response;
 	}
@@ -34,7 +34,7 @@ public class PersonController {
 	@PutMapping
 	public ResponseEntity<Object> updatePerson(@Valid @RequestBody PersonDto person) {
 
-		ResponseEntity<Object> response = personService.updatePerson(person);
+		ResponseEntity<Object> response = personService.update(person);
 
 		return response;
 	}
@@ -42,7 +42,7 @@ public class PersonController {
 	@GetMapping("/{id}")
 	public ResponseEntity<Object> findPersonById(@PathVariable long id) {
 
-		ResponseEntity<Object> response = personService.findPersonById(id);
+		ResponseEntity<Object> response = personService.findById(id);
 
 		return response;
 	}
@@ -50,7 +50,7 @@ public class PersonController {
 	@GetMapping
 	public ResponseEntity<Object> findAllPeople() {
 
-		ResponseEntity<Object> response = personService.findAllPeople();
+		ResponseEntity<Object> response = personService.findAll();
 		
 		return response;
 	}
@@ -58,7 +58,7 @@ public class PersonController {
 	@DeleteMapping("/{id}")
 	public ResponseEntity<Object> deletePerson(@PathVariable long id){
 		
-		ResponseEntity<Object> response = personService.deletePerson(id);
+		ResponseEntity<Object> response = personService.delete(id);
 		
 		return response;
 	}
