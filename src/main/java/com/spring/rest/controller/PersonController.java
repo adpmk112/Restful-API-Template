@@ -9,15 +9,18 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.spring.rest.dtomodel.PersonDto;
 import com.spring.rest.service.PersonService;
 
 import jakarta.validation.Valid;
+import lombok.extern.slf4j.Slf4j;
 
 @RestController
 @RequestMapping("/api/people")
+@Slf4j
 public class PersonController {
 
 	@Autowired
@@ -26,41 +29,37 @@ public class PersonController {
 	@PostMapping
 	public ResponseEntity<Object> createPerson(@Valid @RequestBody PersonDto person) {
 
-		ResponseEntity<Object> response = personService.save(person);
-
-		return response;
+		return personService.save(person);
 	}
 
 	@PutMapping
 	public ResponseEntity<Object> updatePerson(@Valid @RequestBody PersonDto person) {
 
-		ResponseEntity<Object> response = personService.update(person);
-
-		return response;
+		return personService.update(person);
 	}
 
 	@GetMapping("/{id}")
 	public ResponseEntity<Object> findPersonById(@PathVariable long id) {
 
-		ResponseEntity<Object> response = personService.findById(id);
-
-		return response;
+		return personService.findById(id);
 	}
 
 	@GetMapping
 	public ResponseEntity<Object> findAllPeople() {
 
-		ResponseEntity<Object> response = personService.findAll();
-		
-		return response;
-	}
-	
-	@DeleteMapping("/{id}")
-	public ResponseEntity<Object> deletePerson(@PathVariable long id){
-		
-		ResponseEntity<Object> response = personService.delete(id);
-		
-		return response;
+		return personService.findAll();
 	}
 
+	@DeleteMapping("/{id}")
+	public ResponseEntity<Object> deletePerson(@PathVariable long id) {
+
+		return personService.delete(id);
+	}
+
+	@GetMapping("/search")
+	public ResponseEntity<Object> advancedSearch(@RequestParam(required = false) String name,
+												 @RequestParam(defaultValue = "0") Integer age) {
+		log.info(name + " and " + age);
+		return personService.advancedSearch(name, age);
+	}
 }
