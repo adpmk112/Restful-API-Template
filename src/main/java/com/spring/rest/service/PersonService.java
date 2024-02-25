@@ -94,4 +94,14 @@ public class PersonService implements CommonCRUDConfigurable<Person,PersonDto> {
 		return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
 		
 	}
+	
+	public ResponseEntity<Object> advancedSearch(String name, int age){
+		
+		List<Person> personList = personRepo.findByNameContainingAndAge(name, age);
+		
+		List<PersonDto> responseData = personMapper.toPersonDtoList(personList);
+		
+		return ResponseEntity.status(HttpStatus.OK)
+				.body(new ApiResponse("Data List retrieved successfully", responseData));
+	}
 }
